@@ -1,36 +1,37 @@
-<div class="header">
-  <ul class="nav nav-pills pull-right">
-    <li class="active"><a ng-href="#">Home</a></li>
-    <li><a ng-href="#">About</a></li>
-    <li><a ng-href="#">Contact</a></li>
-  </ul>
-  <h3 class="text-muted">essos</h3>
+<div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12">
+        <h4 class="text-center">eSRC Authentication, Authorisation and Logging console</h4>
+        <hr/>
+    </div>
 </div>
-
-<div class="jumbotron">
-  <h1>'Allo, 'Allo!</h1>
-  <p class="lead">
-    <img src="images/yeoman.png" alt="I'm Yeoman"><br>
-    Always a pleasure scaffolding your apps.
-  </p>
-  <p><a class="btn btn-lg btn-success" ng-href="#">Splendid!</a></p>
+<div class="row">
+    <div class="col-sm-10 col-md-10 col-lg-10">
+    </div>
+    <div class="col-sm-2 col-md-2 col-lg-2">
+        <div class="btn-group pull-right">
+            <button class="btn btn-default" ng-click="login()" ng-if="!ready">Login</button>
+            <button class="btn btn-default" ng-click="logout()" ng-if="ready">Logout</button>
+        </div>
+    </div>
 </div>
-
-<div class="row marketing">
-  <h4>HTML5 Boilerplate</h4>
-  <p>
-    HTML5 Boilerplate is a professional front-end template for building fast, robust, and adaptable web apps or sites.
-  </p>
-
-  <h4>Angular</h4>
-  <p>
-    AngularJS is a toolset for building the framework most suited to your application development.
-  </p>
-
-  <h4>Karma</h4>
-  <p>Spectacular Test Runner for JavaScript.</p>
-</div>
-
-<div class="footer">
-  <p>♥ from the Yeoman team</p>
+<br/>
+<div ng-if="ready">
+    <div class="row" ng-if="isAdmin">
+        <div class="col-sm-12 col-md-12 col-lg-12">
+            <div class="well">
+                <a href="/#/users">Manage users</a>
+                <hr/>
+                <p>This includes granting users the privilege to use eSRC web services as well as blocking their access altogether.</p>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12 col-md-12 col-lg-12">
+            <div class="well">
+                <a href="/#/logs">View application logs</a>
+                <hr/>
+                <p>View application log data.</p>
+            </div>
+        </div>
+    </div>
 </div>

@@ -2,7 +2,7 @@
 
 angular.module('adminApp')
   .constant('configuration', {
-      'development': 'http://dev01.internal:3000',
+      'development': 'https://essos.esrc.info',
       'testing': '',
       'production': '',
       'service': 'development'

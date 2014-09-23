@@ -1,50 +1,35 @@
 'use strict';
 
 angular.module('adminApp')
-  .service('AuthService', [ '$location', '$http', function AuthService($location, $http) {
+  .service('AuthService', [ '$location', '$routeParams', '$http', '$rootScope',
+        function AuthService($location, $routeParams, $http, $rootScope) {
+
+      /* Messages:
+       * When the user logs in to the app successfully the service will broadcast via
+       *  the rootScope the message: 'user-logged-in'
+       */
 
       var debug = true;
       var log = function(msg) {
           if (debug) {
               console.log(msg);
           }
-      }
+      };
       
       /* 
        * @function: init
        */
-      function init(authService) {
-          log('init method called');
-          var l = {};
-          angular.copy($location.search(), l);
-          AuthService.service = authService;
-
-          if (angular.isUndefined(l.s)) {
-              // if there's no code; redirect to essos so the user can log in
-              log('No code defined; calling login method');
+      function init() {
+          // is there a token stored in localStorage?
+          log('AuthService.init()');
+          if (localStorage.getItem('token') === null) {
+              // no - redirect to login service
               AuthService.login();
+          
+          // yes - verify it against the login service
           } else {
-              log('Code found in url');
-              // there is a code
-              AuthService.code = l.s;
-
-              // use the ONE TIME CODE to GET the token
-              log('Retrieving token');
-              var url = AuthService.service + '/code/' + AuthService.code + '?callback=JSON_CALLBACK';
-              $http.jsonp(url).then(function(resp) {
-                  log('Token retrieved');
-                  AuthService.token = resp.data.token;
-                  log('User logged in!', AuthService.token);
-
-                  // we received a token so populate the user data
-                  log('Retrieving user data');
-                  AuthService.getUserData();
-              },
-              function(resp) {
-                  // Most likely a 401 unauthorised 
-                  log('401 raised; calling login method');
-                  AuthService.login();
-              });
+              log('Found local token. Verifying');
+              AuthService.verify();
           }
       }
 
@@ -52,8 +37,7 @@ angular.module('adminApp')
        * @function: login
        */
       function login() {
-          log('login method called');
-          $location.search('');
+          log('AuthService.login(). Redirecting to login service.');
           var redirectTo = AuthService.service + '/?r=' + encodeURIComponent($location.absUrl());
           window.location = redirectTo;
       }
@@ -62,47 +46,63 @@ angular.module('adminApp')
        * @function: logout
        */
       function logout() {
-          var url = AuthService.service + '/logout?callback=JSON_CALLBACK';
-          $http.jsonp(url).then(function(resp) {
-              AuthService.login();
-          },
-          function(resp) {
-          });
+          log('AuthService.logout(). Removing local token.');
+          localStorage.removeItem('token');
+          $rootScope.$broadcast('user-logged-out');
       }
 
       /*
-       * @function: getUserData
+       * @function: getToken
        */
-      function getUserData() {
-          log('getUserData method called');
-          var url = AuthService.service + '/token';
-          var config = {
-              'url': url,
-              'method': 'POST',
-              'data': {
-                  'token': AuthService.token,
+      function getToken() {
+          log('AuthService.getToken()');
+          if ($routeParams.code === undefined) {
+              AuthService.login();
+          } else {
+              log('Found code. Retrieving token.');
+              var url = AuthService.service + '/token/' + $routeParams.code + '?r=' + encodeURIComponent($location.absUrl());
+              console.log(url);
+              $http.get(url).then(function(resp) {
+                  log('Saving token. Redirecting to home page.');
+                  localStorage.setItem('token', resp.data);
+                  $location.url('/');
               },
-          };
-          $http.post(url, config).then(function(resp) {
-              log('Retrieved user data');
-              AuthService.userData = angular.fromJson(resp.data);
-              log(AuthService.userData);
+              function(resp) {
+                  // if we get a 401 unauthorized - try the login again
+                  if (resp.status === 401) {
+                      AuthService.login();
+                  }
+              });
+          }
+      }
+
+      /*
+       * @function: verify
+       */
+      function verify() {
+          log('AuthService.verify()');
+          var url = AuthService.service + '/token';
+          $http.get(url).then(function(resp) {
+              AuthService.claims = resp.data.claims;
+              $rootScope.$broadcast('user-logged-in');
           },
           function(resp) {
-              // Most likely a 401 unauthorised
-              log('401 raised; calling login method');
-              AuthService.login();
+              // if we get a 401 Unauthorized - try the login again
+              if (resp.status === 401) {
+                  AuthService.login();
+              }
           });
       }
 
-
       var AuthService = {
-          service: undefined,
+          service: 'https://essos.esrc.info',
           token: undefined,
+          verified: false,
           init: init,
           login: login,
           logout: logout,
-          getUserData: getUserData
+          getToken: getToken,
+          verify: verify
       };
       return AuthService;
 
