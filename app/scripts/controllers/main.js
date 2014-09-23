@@ -9,6 +9,8 @@ angular.module('adminApp')
         // check the claims in the token to see if the user is an admin and 
         //   set up the permissions accordingly
         $scope.isAdmin = AuthService.claims.isAdmin;
+        $scope.fullname = AuthService.claims.fullname;
+        console.log(AuthService.claims);
         $scope.ready = true;
     });
     $scope.$on('user-logged-out', function() {

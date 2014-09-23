@@ -1,18 +1,10 @@
-<div class="row">
-    <div class="col-sm-12 col-md-12 col-lg-12">
-        <h4>Manage users</h4>
-        <hr/>
-    </div>
-</div>
-<div class="row">
-    <div class="col-sm-4 col-md-4 col-lg-4">
-        <p>user list</p>
-        <ul>
-            <li ng-repeat="user in users">{{user.fullname}} ({{user.username}})</li>
-        </ul>
-        
-    </div>
-    <div class="col-sm-12 col-md-12 col-lg-12">
-        
-    </div>
+<div ng-if="ready && isAdmin">
+    <tabset>
+        <tab heading="Manage Users">
+            <manage-users></manage-users>
+        </tab>
+        <tab heading="Invite Users">
+            <invite-user></invite-user>
+        </tab>
+    </tabset>
 </div>

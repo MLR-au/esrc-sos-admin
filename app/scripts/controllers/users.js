@@ -3,26 +3,20 @@
 angular.module('adminApp')
   .controller('UsersCtrl', [ '$scope', '$http', 'AuthService', function ($scope, $http, AuthService) {
 
-      // check that the user session is still ok
-      AuthService.verify();
-
-      // get the list of users from the sign on service
-      var url = AuthService.service + '/users';
-      var config = {
-          'url': url,
-          'method': 'POST',
-          'data': {
-              'token': AuthService.token
-          }
-
-      };
-      console.log(config);
-      $http.post(url, config).then(function(resp) {
-          console.log(resp);
-      },
-      function(resp) {
-          console.log(resp);
+      // listen for the logged in message from the auth service
+      $scope.ready = false;
+      $scope.$on('user-logged-in', function() {
+          // check the claims in the token to see if the user is an admin and
+          //   set up the permissions accordingly
+          $scope.isAdmin = AuthService.claims.isAdmin;
+          $scope.ready = true;
+      });
+      $scope.$on('user-logged-out', function() {
+          $scope.isAdmin = false;
+          $scope.ready = false;
       });
 
+      // check that the user session is ok
+      AuthService.verify();
 
   }]);

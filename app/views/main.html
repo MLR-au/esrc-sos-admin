@@ -1,37 +1,29 @@
 <div class="row">
-    <div class="col-sm-12 col-md-12 col-lg-12">
-        <h4 class="text-center">eSRC Authentication, Authorisation and Logging console</h4>
-        <hr/>
-    </div>
-</div>
-<div class="row">
     <div class="col-sm-10 col-md-10 col-lg-10">
+        <span ng-if="ready">Hi {{fullname}}. <span ng-if="isAdmin">You are logged in as an Administrator.</span></span>
+        <span ng-if="!ready">Please log in.</span>
     </div>
+
     <div class="col-sm-2 col-md-2 col-lg-2">
-        <div class="btn-group pull-right">
-            <button class="btn btn-default" ng-click="login()" ng-if="!ready">Login</button>
-            <button class="btn btn-default" ng-click="logout()" ng-if="ready">Logout</button>
-        </div>
+        <button class="btn btn-default pull-right" ng-click="login()" ng-if="!ready">Login</button>
+        <button class="btn btn-default pull-right" ng-click="logout()" ng-if="ready">Logout</button>
     </div>
 </div>
-<br/>
-<div ng-if="ready">
-    <div class="row" ng-if="isAdmin">
-        <div class="col-sm-12 col-md-12 col-lg-12">
-            <div class="well">
-                <a href="/#/users">Manage users</a>
-                <hr/>
-                <p>This includes granting users the privilege to use eSRC web services as well as blocking their access altogether.</p>
-            </div>
+<hr/>
+<div class="row" ng-if="ready && isAdmin">
+    <div class="col-sm-12 col-md-12 col-lg-12">
+        <div class="well">
+            <a href="#/users">Manage Users</a>
+            <p>Invite users to use our services in addition to managing their privileges or revoking existing user access altogether.</p>
         </div>
+
     </div>
-    <div class="row">
-        <div class="col-sm-12 col-md-12 col-lg-12">
-            <div class="well">
-                <a href="/#/logs">View application logs</a>
-                <hr/>
-                <p>View application log data.</p>
-            </div>
+</div>
+<div class="row" ng-if="ready">
+    <div class="col-sm-12 col-md-12 col-lg-12">
+        <div class="well">
+            <a href="#/logs">View Application Logs</a>
+            <p>View the logs from managed applications.</p>
         </div>
     </div>
 </div>
