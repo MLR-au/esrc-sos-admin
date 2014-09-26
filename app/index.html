@@ -42,6 +42,13 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
               <ul class="nav navbar-nav">
+                <li class="dropdown">
+                  <a href="#" class="dropdown-toggle" data-toggle="dropdown">User Management <span class="caret"></span></a>
+                  <ul class="dropdown-menu" role="menu">
+                    <li><a href="#/user/create">Create</a></li>
+                    <li><a href="#/user/manage">Manage Access</a></li>
+                  </ul>
+                </li>
               <!--
                 <li><a href="#/users" ng-click="manageUsers()">Manage Users</a></li>
                 <li><a href="#/logs" ng-click="viewLogs()">View Application Logs</a></li>
@@ -64,7 +71,6 @@
     <!-- bower:js -->
     <script src="bower_components/jquery/jquery.js"></script>
     <script src="bower_components/angular/angular.js"></script>
-    <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
     <script src="bower_components/angular-cookies/angular-cookies.js"></script>
     <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
     <script src="bower_components/angular-route/angular-route.js"></script>
