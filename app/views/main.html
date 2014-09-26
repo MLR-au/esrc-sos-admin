@@ -10,14 +10,26 @@
     </div>
 </div>
 <hr/>
-<div class="row" ng-if="ready && isAdmin">
-    <div class="col-sm-12 col-md-12 col-lg-12">
-        <div class="well">
-            <a href="#/users">Manage Users</a>
-            <p>Invite users to use our services in addition to managing their privileges or revoking existing user access altogether.</p>
-        </div>
+<div ng-if="ready && isAdmin">
+    <div class="row">
+        <div class="col-sm-12 col-md-12 col-lg-12">
+            <div class="well">
+                <a href="#/user/create">Create User Account</a>
+                <p>Enable user accounts for people accessing via Social logins</p>
+            </div>
 
+        </div>
     </div>
+    <div class="row">
+        <div class="col-sm-12 col-md-12 col-lg-12">
+            <div class="well">
+                <a href="#/user/manage">Manage Users</a>
+                <p>Manage user privileges including revoking existing access altogether.</p>
+            </div>
+
+        </div>
+    </div>
+
 </div>
 <div class="row" ng-if="ready">
     <div class="col-sm-12 col-md-12 col-lg-12">

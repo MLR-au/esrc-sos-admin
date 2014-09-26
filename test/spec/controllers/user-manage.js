@@ -1,17 +1,17 @@
 'use strict';
 
-describe('Controller: UsersCtrl', function () {
+describe('Controller: UserManageCtrl', function () {
 
   // load the controller's module
   beforeEach(module('adminApp'));
 
-  var UsersCtrl,
+  var UserManageCtrl,
     scope;
 
   // Initialize the controller and a mock scope
   beforeEach(inject(function ($controller, $rootScope) {
     scope = $rootScope.$new();
-    UsersCtrl = $controller('UsersCtrl', {
+    UserManageCtrl = $controller('UserManageCtrl', {
       $scope: scope
     });
   }));

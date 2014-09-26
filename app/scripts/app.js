@@ -12,13 +12,17 @@ angular.module('adminApp', [
         templateUrl: 'views/main.html',
         controller: 'MainCtrl'
       })
-      .when('/users', {
-        templateUrl: 'views/users.html',
-        controller: 'UsersCtrl'
+      .when('/user/create', {
+        templateUrl: 'views/user-create.html',
+        controller: 'UserCreateCtrl'
       })
       .when('/logs', {
         templateUrl: 'views/logs.html',
         controller: 'LogsCtrl'
+      })
+      .when('/user/manage', {
+        templateUrl: 'views/user-manage.html',
+        controller: 'UserManageCtrl'
       })
       .when('/login/:code', {
         template: '<div></div>',

@@ -1,8 +1,7 @@
 'use strict';
 
 angular.module('adminApp')
-  .controller('UsersCtrl', [ '$scope', '$http', 'AuthService', function ($scope, $http, AuthService) {
-
+  .controller('UserCreateCtrl', [ '$scope', 'AuthService', function ($scope, AuthService) {
       // listen for the logged in message from the auth service
       $scope.ready = false;
       $scope.$on('user-logged-in', function() {
@@ -18,5 +17,4 @@ angular.module('adminApp')
 
       // check that the user session is ok
       AuthService.verify();
-
   }]);

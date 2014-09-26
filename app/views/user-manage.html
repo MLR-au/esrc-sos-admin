@@ -1,0 +1,46 @@
+<div style="padding: 15px;" ng-if="isAdmin && ready">
+    <div class="row">
+        <div class="col-sm-3"><strong>User</strong></div>
+        <div class="col-sm-7"><strong>Applications</strong></div>
+        <div class="col-sm-1 text-center"><strong>Lock</strong></div>
+        <div class="col-sm-1 text-center"><strong>Delete</strong></div>
+    </div>
+    <span ng-repeat="user in users">
+        <div class="row">
+            <div class="col-sm-3">
+                {{user.username}}
+            </div>
+            <div class="col-sm-7">
+                <div ng-repeat="app in user.apps">
+                    <div class="row">
+                        <div class="col-sm-8">
+                            <span ng-if="!app.permission">{{app.name}}</span>
+                            <span class="label label-success" ng-if="app.permission">{{app.name}}</span>
+                        </div>
+                        <div class="col-sm-2">
+                            <button class="btn btn-default btn-xs" ng-click="allowAccess(user.id, app.name)">
+                                <span class="glyphicon glyphicon-ok"></span>
+                            </button>
+                        </div>
+                        <div class="col-sm-2">
+                            <button class="btn btn-default btn-xs" ng-click="removeAccess(user.id, app.name)">
+                                <span class="glyphicon glyphicon-remove"></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-1 text-center">
+                <button class="btn btn-default btn-xs" ng-click="lockAccount(user.id)">
+                    <span class="glyphicon glyphicon-lock"></span>
+                </button>
+            </div>
+            <div class="col-sm-1 text-center">
+                <button class="btn btn-default btn-xs" ng-click="deleteAccount(user.id)">
+                    <span class="glyphicon glyphicon-remove"></span>
+                </button>
+            </div>
+        </div>
+        <br/>
+    </span>
+</div>
