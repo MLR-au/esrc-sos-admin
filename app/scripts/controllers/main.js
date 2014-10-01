@@ -24,7 +24,7 @@ angular.module('adminApp')
 
     $scope.login =  function() {
         // Log the user in - or otherwise
-        AuthService.init();
+        AuthService.login();
     };
 
     $scope.logout = function() {
