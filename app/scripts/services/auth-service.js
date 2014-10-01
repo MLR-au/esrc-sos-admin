@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('adminApp')
-  .service('AuthService', [ '$location', '$routeParams', '$http', '$rootScope',
-        function AuthService($location, $routeParams, $http, $rootScope) {
+  .service('AuthService', [ '$location', '$routeParams', '$http', '$rootScope', '$timeout', 'messageCenterService',
+        function AuthService($location, $routeParams, $http, $rootScope, $timeout, MCS) {
 
       /* Messages:
        * When the user logs in to the app successfully the service will broadcast via
@@ -79,7 +79,7 @@ angular.module('adminApp')
       /*
        * @function: verify
        */
-      function verify() {
+      function verify(redirectToLogin) {
           log('AuthService.verify()');
           var url = AuthService.service + '/token';
           $http.get(url).then(function(resp) {
@@ -89,7 +89,17 @@ angular.module('adminApp')
           function(resp) {
               // if we get a 401 Unauthorized - try the login again
               if (resp.status === 401) {
-                  AuthService.login();
+                  $rootScope.$broadcast('user-logged-out');
+                  if (redirectToLogin !== false) {
+                      MCS.removeShown();
+                      MCS.add('danger', 'You are not authorized to use this application. Redirecting you to the login service in 3s.',
+                          { status: MCS.status.shown}, { timeout: 3000 });
+
+                      $timeout(function(){ 
+                          MCS.removeShown(); 
+                          AuthService.login() 
+                      }, 3000);
+                  }
               }
           });
       }
