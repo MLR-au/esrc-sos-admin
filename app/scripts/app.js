@@ -4,7 +4,8 @@ angular.module('adminApp', [
   'ngCookies',
   'ngSanitize',
   'ngRoute',
-  'ui.bootstrap'
+  'ui.bootstrap',
+  'MessageCenterModule'
 ])
   .config(function ($routeProvider) {
     $routeProvider
