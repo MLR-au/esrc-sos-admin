@@ -19,67 +19,87 @@ angular.module('adminApp')
       // check that the user session is ok
       AuthService.verify();
 
-          var service = configuration[configuration['service']];
-          console.log(service);
+      var service = configuration[configuration['service']];
 
-          $scope.loadUsers = function() {
-              var url = service + '/admin/users';
-               $http.get(url).then(function(resp) {
-                   $scope.users = resp.data.users;
-                   console.log($scope.users);
-               },
-               function(resp) {
-               });
+      $scope.loadUsers = function() {
+          var url = service + '/admin/users';
+           $http.get(url).then(function(resp) {
+               $scope.users = resp.data.users;
+           },
+           function(resp) {
+               if (resp.status === 401) {
+                   AuthService.verify();
+               }
+           });
 
-          }
-          $scope.loadUsers();
+      }
+      $scope.loadUsers();
 
-          $scope.allowAccess = function(userid, app) {
-              console.log('allow', userid, app);
-              var url = service + '/admin/user/' + userid;
-              var data = {
-                  'app': app,
-                  'action': 'allowAccess'
+      var updateUserData = function(userdata) {
+          angular.forEach($scope.users, function(v,i) {
+              if (v._id === userdata._id) {
+                  $scope.users[i] = userdata;
               }
-              $http.put(url, data).then(function(resp) {
-              },
-              function(resp) {
-              })
-          }
+          })
+      }
 
-          $scope.removeAccess = function(userid, app) {
-              console.log('remove', userid, app);
-              var url = service + '/admin/user/' + userid;
-              var data = {
-                  'app': app,
-                  'action': 'denyAccess'
-              }
-              $http.put(url, data).then(function(resp) {
-              },
-              function(resp) {
-              })
+      $scope.access = function(permission, userid, app) {
+          if (permission === 'allow') {
+              permission = 'allowAccess';
+          } else {
+              permission = 'denyAccess';
           }
+          var url = service + '/admin/user/' + userid;
+          var data = {
+              'app': app,
+              'action': permission
+          }
+          $http.put(url, data).then(function(resp) {
+              updateUserData(resp.data.userdata);
+          },
+          function(resp) {
+               if (resp.status === 401) {
+                   AuthService.verify();
+               }
+          })
+      }
 
-          $scope.lockAccount = function(userid) {
-              console.log('lock', userid);
-              var url = service + '/admin/user/' + userid;
-              var data = {
-                  'action': 'lockAccount'
-              }
-              $http.put(url, data).then(function(resp) {
-                  console.log(resp);
-              },
-              function(resp) {
-              })
+      $scope.lockAccount = function(userid) {
+          var url = service + '/admin/user/' + userid;
+          var data = {
+              'action': 'lockAccount'
           }
+          $http.put(url, data).then(function(resp) {
+              updateUserData(resp.data.userdata);
+          },
+          function(resp) {
+               if (resp.status === 401) {
+                   AuthService.verify();
+               }
+          })
+      }
 
-          $scope.deleteAccount = function(userid) {
-              console.log('delete', userid);
-              var url = service + '/admin/user/' + userid;
-              $http.delete(url).then(function(resp) {
-                  $scope.loadUsers();
-              },
-              function(resp) {
+      $scope.deleteAccount = function(userid) {
+          var url = service + '/admin/user/' + userid;
+          $http.delete(url).then(function(resp) {
+              angular.forEach($scope.users, function(v, k) {
+                  if (v._id === userid) {
+                      $scope.users.splice(k, 1);
+                  }
               })
+          },
+          function(resp) {
+               if (resp.status === 401) {
+                   AuthService.verify();
+               }
+          })
+      }
+
+      $scope.appPermission = function(permission) {
+          if (permission === 'allow') { 
+              return true;
+          } else {
+              return false;
           }
+      }
   }]);

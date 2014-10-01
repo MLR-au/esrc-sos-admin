@@ -19,8 +19,8 @@ angular.module('adminApp')
     });
 
 
-    // Log the user in - or otherwise
-    AuthService.init();
+    // Valid token?
+    AuthService.verify(false);
 
     $scope.login =  function() {
         // Log the user in - or otherwise

@@ -2,43 +2,43 @@
     <div class="row">
         <div class="col-sm-3"><strong>User</strong></div>
         <div class="col-sm-7"><strong>Applications</strong></div>
-        <div class="col-sm-1 text-center"><strong>Lock</strong></div>
-        <div class="col-sm-1 text-center"><strong>Delete</strong></div>
     </div>
     <span ng-repeat="user in users">
         <div class="row">
             <div class="col-sm-3">
                 {{user.username}}
+                <br/>
+                <span class="label label-danger" ng-show="user.status === 'locked'">Locked</span>
             </div>
             <div class="col-sm-7">
-                <div ng-repeat="app in user.apps">
+                <div ng-repeat="(app_name, permission) in user.apps">
                     <div class="row">
-                        <div class="col-sm-8">
-                            <span ng-if="!app.permission">{{app.name}}</span>
-                            <span class="label label-success" ng-if="app.permission">{{app.name}}</span>
+                        <div class="col-sm-7">
+                            <span>{{app_name}}</span>
                         </div>
                         <div class="col-sm-2">
-                            <button class="btn btn-default btn-xs" ng-click="allowAccess(user.id, app.name)">
+                            <span ng-show="appPermission(permission)"><span class="label label-success">Allowed</span></span>
+                        </div>
+                        <div class="col-sm-3">
+                            <button class="btn btn-default btn-xs" ng-click="access('allow', user._id, app_name)">
                                 <span class="glyphicon glyphicon-ok"></span>
                             </button>
-                        </div>
-                        <div class="col-sm-2">
-                            <button class="btn btn-default btn-xs" ng-click="removeAccess(user.id, app.name)">
+                            <button class="btn btn-default btn-xs" ng-click="access('deny', user._id, app_name)">
                                 <span class="glyphicon glyphicon-remove"></span>
                             </button>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-sm-1 text-center">
-                <button class="btn btn-default btn-xs" ng-click="lockAccount(user.id)">
-                    <span class="glyphicon glyphicon-lock"></span>
-                </button>
-            </div>
-            <div class="col-sm-1 text-center">
-                <button class="btn btn-default btn-xs" ng-click="deleteAccount(user.id)">
-                    <span class="glyphicon glyphicon-remove"></span>
-                </button>
+            <div class="col-sm-2">
+                <div class="btn-group">
+                    <button class="btn btn-default btn-xs" ng-click="lockAccount(user._id)">
+                        <span class="glyphicon glyphicon-lock"></span>
+                    </button>
+                    <button class="btn btn-default btn-xs" ng-click="deleteAccount(user._id)">
+                        <span class="glyphicon glyphicon-remove"></span>
+                    </button>
+                </div>
             </div>
         </div>
         <br/>

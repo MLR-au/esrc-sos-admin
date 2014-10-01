@@ -10,7 +10,7 @@
         <div class="form-group">
             <label class="col-sm-2">Primary Email</label>
             <div class="col-sm-10">
-                <input type="email" class="form-control" ng-model="userdata.primaryEmail" ng-blur="validatePrimaryEmail()"
+                <input type="email" class="form-control" ng-model="userdata.primaryEmail" ng-blur="validateEmail(userdata.primaryEmail)"
                     placeholder="An email address they have registered with a Social account." required>
                 <br/>
                 <p class="help-block">Enter the email address of the person who should be allowed to create an account. 
@@ -21,7 +21,7 @@
         <div class="form-group">
             <label class="col-sm-2">Secondary Email</label>
             <div class="col-sm-10">
-                <input type="email" class="form-control" ng-model="userdata.secondaryEmail" ng-blur="validateSecondaryEmail()"
+                <input type="email" class="form-control" ng-model="userdata.secondaryEmail" ng-blur="validateEmail(userdata.secondaryEmail)"
                     placeholder="An email address they have registered with a Social account.">
                 <br/>
                 <p class="help-block">Sometimes people have different email addresses attached to different social accounts. If you know the
