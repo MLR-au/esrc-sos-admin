@@ -1,0 +1,34 @@
+{
+  "name": "message-center",
+  "version": "1.0.2",
+  "description": "AngularJS Message Center",
+  "keywords": [
+    "angular",
+    "js",
+    "messages",
+    "alert",
+    "bootstrap"
+  ],
+  "author": "Mateu Aguiló Bosch <mateu.aguilo.bosch@gmail.com>",
+  "readmeFilename": "README.md",
+  "dependencies": {
+    "angular": "~1.2.0",
+    "angular-route": "~1.2.0",
+    "angular-mocks": "~1.2.0"
+  },
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "test"
+  ],
+  "homepage": "https://github.com/mateu-aguilo-bosch/message-center",
+  "_release": "1.0.2",
+  "_resolution": {
+    "type": "version",
+    "tag": "v1.0.2",
+    "commit": "a20bfb032c39d317ce8aa380ee0fc75b724b828d"
+  },
+  "_source": "git://github.com/mateu-aguilo-bosch/message-center.git",
+  "_target": "~1.0.2",
+  "_originalSource": "message-center"
+}
