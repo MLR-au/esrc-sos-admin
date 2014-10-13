@@ -23,7 +23,7 @@ module.exports = function (grunt) {
             dir: 'dist',
             commit: true,
             push: true,
-          },
+         },
         testing: {
             options: {
                 remote: 'git@bitbucket.org:esrc/sos-admin.git',
