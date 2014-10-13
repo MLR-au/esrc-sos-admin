@@ -10,7 +10,6 @@ angular.module('adminApp')
         //   set up the permissions accordingly
         $scope.isAdmin = AuthService.claims.admin;
         $scope.fullname = AuthService.claims.fullname;
-        console.log(AuthService.claims);
         $scope.ready = true;
     });
     $scope.$on('user-logged-out', function() {

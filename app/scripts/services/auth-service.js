@@ -61,7 +61,6 @@ angular.module('adminApp')
           } else {
               log('Found code. Retrieving token.');
               var url = AuthService.service + '/token/' + $routeParams.code + '?r=' + encodeURIComponent($location.absUrl());
-              console.log(url);
               $http.get(url).then(function(resp) {
                   log('Saving token. Redirecting to home page.');
                   localStorage.setItem('token', resp.data);
