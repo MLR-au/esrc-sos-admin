@@ -105,7 +105,7 @@ angular.module('adminApp')
       }
 
       var AuthService = {
-          service: 'https://essos.esrc.info',
+          service: 'https://sos.esrc.unimelb.edu.au',
           token: undefined,
           verified: false,
           init: init,

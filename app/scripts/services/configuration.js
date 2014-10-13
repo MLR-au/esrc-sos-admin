@@ -4,6 +4,6 @@ angular.module('adminApp')
   .constant('configuration', {
       'development': 'https://essos.esrc.info',
       'testing': '',
-      'production': '',
-      'service': 'development'
+      'production': 'https://sos.esrc.unimelb.edu.au',
+      'service': 'production'
   });
