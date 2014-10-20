@@ -5,5 +5,5 @@ angular.module('adminApp')
       'development': 'https://service.esrc.info',
       'testing': '',
       'production': 'https://sos.esrc.unimelb.edu.au',
-      'service': 'development'
+      'service': 'production'
   });
