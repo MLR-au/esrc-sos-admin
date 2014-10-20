@@ -31,7 +31,6 @@ angular.module('adminApp')
       $scope.validateEmail = function(email) {
           if (email !== undefined && email !== '') {
               var url = service + '/admin/email/' + email;
-              console.log(url);
               $http.get(url).then(function(resp) {
                   if (resp.data.userdata !== '') {
                       MCS.add('danger', "There's already a user with that email address.", { status: MCS.status.shown});
