@@ -1,6 +1,6 @@
 <div class="row">
     <div class="col-sm-10 col-md-10 col-lg-10">
-        <span ng-if="ready">Hi {{fullname}}. <span ng-if="isAdmin">You are logged in as an Administrator.</span></span>
+        <span ng-if="ready">Hi {{name}}. <span ng-if="admin">You are logged in as an Administrator.</span></span>
         <span ng-if="!ready">Please log in.</span>
     </div>
 
@@ -10,7 +10,7 @@
     </div>
 </div>
 <hr/>
-<div ng-if="ready && isAdmin">
+<div ng-if="ready && admin">
     <div class="row">
         <div class="col-sm-12 col-md-12 col-lg-12">
             <div class="well">

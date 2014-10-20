@@ -9,11 +9,14 @@ angular.module('adminApp')
       $scope.$on('user-logged-in', function() {
           // check the claims in the token to see if the user is an admin and
           //   set up the permissions accordingly
-          $scope.isAdmin = AuthService.claims.admin;
+          var userData = AuthService.getUserData();
+          $scope.admin = userData.admin;
+          $scope.name = userData.name;
           $scope.ready = true;
       });
       $scope.$on('user-logged-out', function() {
-          $scope.isAdmin = false;
+          $scope.admin = false;
+          $scope.name = undefined;
           $scope.ready = false;
       });
 
@@ -21,7 +24,6 @@ angular.module('adminApp')
       AuthService.verify();
 
       var service = configuration[configuration['service']];
-      console.log(service);
 
       // init the userdata object
       $scope.userdata = {};
