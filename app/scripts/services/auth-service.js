@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('adminApp')
+angular.module('interfaceApp')
   .service('AuthService', [ '$location', '$routeParams', '$http', '$rootScope', '$timeout', 'messageCenterService',
         function AuthService($location, $routeParams, $http, $rootScope, $timeout, MCS) {
 
@@ -108,19 +108,30 @@ angular.module('adminApp')
        * @function: getUserData
        */
       function getUserData() {
-          var app_data = AuthService.claims.apps[AuthService.appUrl];
+          var app_data;
+          angular.forEach(AuthService.claims.apps, function(v,k) {
+              if ($location.absUrl().search(k) !== -1) {
+                  app_data = v;
+              }
+          })
+          if (app_data === undefined) {
+              console.log("Something's not right. Not logging you in.");
+              AuthService.logout();
+              MCS.add('danger', "Oh snap! We're having some issues right now. Hopefully these will be resolved soon.");
+              return;
+          }
           if (AuthService.claims !== undefined) {
               return {
                   'name': AuthService.claims.user.name,
                   'email': AuthService.claims.user.email,
                   'admin': app_data.admin
               }
-          }
+          } 
+
       }
 
       var AuthService = {
           service: 'https://sos.esrc.unimelb.edu.au',
-          appUrl: 'https://dashboard.esrc.unimelb.edu.au/sos/',
           token: undefined,
           claims: undefined,
           verified: false,
