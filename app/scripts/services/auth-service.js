@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('interfaceApp')
+angular.module('adminApp')
   .service('AuthService', [ '$location', '$routeParams', '$http', '$rootScope', '$timeout', 'messageCenterService',
         function AuthService($location, $routeParams, $http, $rootScope, $timeout, MCS) {
 
