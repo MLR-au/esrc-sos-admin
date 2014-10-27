@@ -19,7 +19,6 @@ angular.module('adminApp')
         $scope.ready = false;
     });
 
-
     // Valid token?
     AuthService.verify(false);
 
